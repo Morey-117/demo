@@ -14,4 +14,6 @@ public class ClientResponse {
     private Long quantityOfProducts;
 
     private String typeOfService;
+
+    private String token;
 }

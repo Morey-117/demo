@@ -4,6 +4,7 @@ import com.example.demo.controller.dtos.requests.ClientRequest;
 import com.example.demo.controller.dtos.responses.ClientResponse;
 import com.example.demo.entities.Client;
 import com.example.demo.repositories.IClientRepository;
+import com.example.demo.security.TokenUtils;
 import com.example.demo.services.interfaces.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,17 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     public ClientResponse create(ClientRequest request) {
-        return from(repository.save(from(request)));
+        ClientResponse client = from(repository.save(from(request)));
+        client.setToken(null);
+        return client;
     }
 
     @Override
     public ClientResponse get(Long id) {
-        return from(findAndEnsuereExist(id));
+        ClientResponse client = from(findAndEnsuereExist(id));
+        String token = TokenUtils.createToken(client.getName(), client.getTypeOfService());
+        client.setToken("Bearer " + token);
+        return client;
     }
 
     @Override

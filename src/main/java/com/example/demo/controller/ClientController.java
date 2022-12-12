@@ -30,12 +30,12 @@ public class ClientController {
         return service.create(request);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}/update")
     private ClientResponse update(@PathVariable Long id, @RequestBody ClientRequest request){
         return service.update(id, request);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}/delete")
     private void delete(@PathVariable Long id){
         service.delete(id);
     }
